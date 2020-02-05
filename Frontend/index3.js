@@ -27,7 +27,7 @@ let body = document.querySelector("body")
     roundH2.innerText = `Answers: ${count}/8`
 
 
-fetch(`http://localhost:3000/categories`)
+fetch(`https://intense-ridge-48974.herokuapp.com/categories`)
   .then(r => r.json())
   .then((categoriesArr) => {
     
@@ -129,7 +129,7 @@ fetch(`http://localhost:3000/categories`)
     submitForm.addEventListener('submit', (event) => {
         
         event.preventDefault()
-        fetch(`http://localhost:3000/scores`, {
+        fetch(`https://intense-ridge-48974.herokuapp.com/scores`, {
           method:'POST',
           headers: { 
             'content-type': 'application/json',
@@ -154,7 +154,7 @@ fetch(`http://localhost:3000/categories`)
 
 // getScorePage()
 function getScorePage(){
-    fetch(`http://localhost:3000/scores`)
+    fetch(`https://intense-ridge-48974.herokuapp.com/scores`)
       .then(r => r.json())
       .then((scoresArr) => {
 
@@ -188,7 +188,7 @@ function renderScorePage(score){
 
         scoreButton.addEventListener('click', (event) => {
             // console.log(score.id)
-            fetch(`http://localhost:3000/scores/${score.id}`, {
+            fetch(`https://intense-ridge-48974.herokuapp.com/scores/${score.id}`, {
               method:'DELETE',
               
             })
@@ -202,7 +202,7 @@ function renderScorePage(score){
 
         scoreNameLi.addEventListener('click', (event) => {
             console.log(score)
-            fetch(`http://localhost:3000/scores/${score.id}`, {
+            fetch(`https://intense-ridge-48974.herokuapp.com/${score.id}`, {
               method:'PATCH',
               headers: { 
                 'content-type': 'application/json',
