@@ -6,13 +6,17 @@ let scoreContainer = document.querySelector('.score-container')
 let scoreH1 = document.querySelector('.score-h1')
 let livesH2 = document.querySelector('.lives-h2')
 let roundH2 = document.querySelector('.round-h2')
+let roundsH2 = document.querySelector('.rounds-h2')
 let submitForm = document.querySelector('.trivia-space')
 submitForm.style.display = 'none'
+let playButton = document.querySelector('.play-button')
+playButton.style.display='none'
 let scoreDiv = document.querySelector('.score-div')
 scoreDiv.style.display = 'none'
 let triviaH1 = document.querySelector('.trivia-h1')
     triviaText = triviaH1.innerText
-let categoryId 
+
+
 
 
 let score = 0
@@ -25,9 +29,11 @@ let body = document.querySelector("body")
     scoreH1.innerText = `Score: ${score}`
     livesH2.innerText = `Lives: ${lives}`
     roundH2.innerText = `Answers: ${count}/8`
-
-
-fetch(`https://intense-ridge-48974.herokuapp.com/categories`)
+    roundsH2.innerText = `Rounds: ${counter}/8`
+    
+    start()
+    function start(){
+      fetch(`https://intense-ridge-48974.herokuapp.com/categories`)
   .then(r => r.json())
   .then((categoriesArr) => {
     
@@ -39,10 +45,29 @@ fetch(`https://intense-ridge-48974.herokuapp.com/categories`)
             randQuestion = category.questions[rand]
 
             renderCategories(randQuestion, category.questions, category)
-            
+        });   
+      })
+    }
 
-        });
-        
+    playButton.addEventListener('click', (event) => {
+      event.preventDefault()
+      function start(){
+        fetch(`https://intense-ridge-48974.herokuapp.com/categories`)
+    .then(r => r.json())
+    .then((categoriesArr) => {
+      
+      categoriesArr.forEach(category => {
+          
+          
+          let rand = Math.floor(Math.random() * 60)
+          
+              randQuestion = category.questions[rand]
+  
+              renderCategories(randQuestion, category.questions, category)
+          });   
+        })
+      }
+      console.log(start())
     })
 
   
@@ -104,20 +129,26 @@ fetch(`https://intense-ridge-48974.herokuapp.com/categories`)
                   count ++
                     scoreH1.innerText = `Score: ${score}`
                     roundH2.innerText = `Answers: ${count}/8`
+                    roundsH2.innerText = `Rounds: ${counter}/8`
                     if(counter <= 0){
                         gameContainer.innerHTML = ''
                         submitForm.style.display = 'block'
+                        playButton.style.display='block'
                     }
                 
                   console.log('right')
                     
                 }else{
+                    
                     --lives
+
                     livesH2.innerText = `Lives: ${lives}`
+                    roundsH2.innerText = `Rounds: ${counter}/8`
                     event.target.style.color = 'red'
                     if(counter <= 0 || lives <= 0){
                         gameContainer.innerHTML = ''
                         submitForm.style.display = 'block'
+                        playButton.style.display='block'
                     }
                     console.log('wrong')
 
@@ -151,6 +182,7 @@ fetch(`https://intense-ridge-48974.herokuapp.com/categories`)
           
     })
 
+  
 
 // getScorePage()
 function getScorePage(){
@@ -222,4 +254,7 @@ function renderScorePage(score){
               })
         })
 }
+
+
+
     
