@@ -14,7 +14,7 @@ playButton.style.display='none'
 let scoreDiv = document.querySelector('.score-div')
 scoreDiv.style.display = 'none'
 let triviaH1 = document.querySelector('.trivia-h1')
-    triviaText = triviaH1.innerText
+  triviaText = triviaH1.innerText
 
 
 
@@ -45,30 +45,18 @@ let body = document.querySelector("body")
             randQuestion = category.questions[rand]
 
             renderCategories(randQuestion, category.questions, category)
+            
         });   
       })
     }
-
-    playButton.addEventListener('click', (event) => {
+    play()
+    function play(){ 
+      playButton.addEventListener('click', (event) => {
       event.preventDefault()
-      function start(){
-        fetch(`https://intense-ridge-48974.herokuapp.com/categories`)
-    .then(r => r.json())
-    .then((categoriesArr) => {
-      
-      categoriesArr.forEach(category => {
-          
-          
-          let rand = Math.floor(Math.random() * 60)
-          
-              randQuestion = category.questions[rand]
-  
-              renderCategories(randQuestion, category.questions, category)
-          });   
-        })
-      }
-      console.log(start())
-    })
+      console.log('yo')
+      location.reload(true)
+  })
+}
 
   
   function renderCategories(randQuestion, questionArr, category){
@@ -81,6 +69,7 @@ let body = document.querySelector("body")
 
     let categoryButton = document.createElement('button')
         categoryButton.innerText = 'play'
+        categoryButton.style.backgroundColor = '#A63446'
         categoryDiv.append(categoryH2,  categoryButton)
         categoriesContainer.append(categoryDiv)
 
@@ -88,18 +77,29 @@ let body = document.querySelector("body")
         categoryButton.addEventListener('click', (event) => {
             addQuestionToGame(randQuestion, questionArr, category)
             categoriesContainer.style.display = 'none'
+            window.scrollTo(0,0)
         })
   }
   
 
   function addQuestionToGame(question, questionArr, category){
       categoryId = category
-
+    
     let rand = Math.floor(Math.random() * questionArr.length) 
+    
+    let questionDiv = document.createElement('div');
+      // questionDiv.style.paddingBottom = '560px';
+        // questionDiv.style.backgroundImage = 'linear-gradient(#515DA2, #6F9CEB )'
+        // box-shadow: 10px 12px 12px 0px black;"
+          questionDiv.style.backgroundColor = 'rgb(229, 218, 218, .8)'
+          questionDiv.style.boxShadow = '10px 12px 12px 0px black'
+          // questionDiv.style.border = 'black solid 1px'
+          questionDiv.style.paddingBottom = '.2px'
 
-    let questionDiv = document.createElement('div')
       let questionBoxH2 = document.createElement('h2')
           questionBoxH2.innerText = question.question
+          questionBoxH2.style.margin = 'auto'
+
 
         questionDiv.append(questionBoxH2)
         gameContainer.append(questionDiv)
@@ -141,17 +141,18 @@ let body = document.querySelector("body")
                 }else{
                     
                     --lives
+                    
 
                     livesH2.innerText = `Lives: ${lives}`
                     roundsH2.innerText = `Rounds: ${counter}/8`
                     event.target.style.color = 'red'
-                    if(counter <= 0 || lives <= 0){
+                    if(counter <= 0 || lives < 0){
                         gameContainer.innerHTML = ''
                         submitForm.style.display = 'block'
                         playButton.style.display='block'
                     }
                     console.log('wrong')
-
+                    
                 }
             })
         });
