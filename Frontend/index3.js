@@ -1,5 +1,3 @@
-
-
 let gameContainer = document.querySelector('.game-container')
 let categoriesContainer = document.querySelector('.categories-container')
 let scoreContainer = document.querySelector('.score-container')
