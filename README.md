@@ -19,7 +19,7 @@ Running the Frontend:
 
 The questions were seeded on the backend and fetched with the HTTParty gem
 
-```
+```javascript
 difficulties = ['easy', 'medium', 'hard']
 categories = (1..15).to_a
 
